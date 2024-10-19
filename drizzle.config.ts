@@ -3,13 +3,14 @@ import * as dotenv from "dotenv";
 import path from "path";
 
 dotenv.config({
-  path: "./env.local",
+  path: ".env.local",
 });
+
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./src/dbschema.ts",
+  schema: "./src/db/schema.ts",
   out: "./src/db/migrations",
   dbCredentials: {
-    url: String(process.env.XATA_DATABASE_URL),
+    url: String(process.env.XATA_DATABASE_URL!),
   },
 });
