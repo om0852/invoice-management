@@ -10,16 +10,20 @@ import SubmitButton from "@/components/SubmitButton";
 import { Invoice } from "@/db/schema";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { notFound } from "next/navigation";
 
 const Page = async ({ params }: { params: { invoiceId: string } }) => {
   const { invoiceId } = await params;
   const parsedInvoiceId = parseInt(invoiceId);
-
+if(isNaN(parsedInvoiceId)){
+    throw new Error("Invalid Invoice id");
+}
   const [result] = await db
     .select()
     .from(Invoice)
     .where(eq(Invoice.id, invoiceId))
     .limit(1);
+    if(!result) notFound();
   return (
     <>
       <main className="flex  flex-col justify-center h-full  gap-6 max-w-5xl mx-auto my-12">
