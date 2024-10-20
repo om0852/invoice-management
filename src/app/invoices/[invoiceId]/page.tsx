@@ -1,19 +1,12 @@
-import React, { startTransition, SyntheticEvent, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import { createAction } from "@/app/actions";
-import SubmitButton from "@/components/SubmitButton";
 import { Invoice } from "@/db/schema";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { notFound } from "next/navigation";
 
 const Page = async ({ params }: { params: { invoiceId: string } }) => {
-  const { invoiceId } = await params;
+  const { invoiceId } = params;
   const parsedInvoiceId = parseInt(invoiceId);
 if(isNaN(parsedInvoiceId)){
     throw new Error("Invalid Invoice id");

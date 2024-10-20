@@ -3,9 +3,6 @@ import React, { startTransition, SyntheticEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { sql } from "drizzle-orm";
-import { db } from "@/db";
 import { createAction } from "@/app/actions";
 import SubmitButton from "@/components/SubmitButton";
 const Page = () => {

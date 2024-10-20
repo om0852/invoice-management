@@ -1,4 +1,3 @@
-import { ValueIcon } from "@radix-ui/react-icons";
 import {
   integer,
   pgEnum,
