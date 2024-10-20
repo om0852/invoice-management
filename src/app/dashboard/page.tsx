@@ -9,11 +9,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { db } from "@/db";
+import { Invoice } from "@/db/schema";
+import { cn } from "@/lib/utils";
 import { BadgePlus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
-const Page = () => {
+const Page = async () => {
+  const results = await db.select().from(Invoice);
   return (
     <main className="flex  flex-col justify-center h-full text-center gap-6 max-w-5xl mx-auto my-12">
       {" "}
@@ -40,25 +44,55 @@ const Page = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell className="text-left font-medium p-4 ">
-              <span className="font-semibold">10/20/2024</span>
-            </TableCell>
-            <TableCell className="text-left p-4">
-              <span className="font-semibold">om salunke</span>
-            </TableCell>
-            <TableCell className="text-left p-4">
-              <span className="">om salunke</span>
-            </TableCell>
-            <TableCell className="text-center p-4">
-              <Badge className="rounded-full py-1 px-4">
-                <span className="font-semibold">paid</span>
-              </Badge>
-            </TableCell>
-            <TableCell className="text-right p-4">
-              <span className="font-semibold">$250</span>
-            </TableCell>
-          </TableRow>
+          {results.map((result) => (
+            <TableRow key={result.id}>
+              <TableCell className="text-left font-medium p-0 ">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold block p-4"
+                >
+                  {new Date(result.createTs).toLocaleDateString()}
+                </Link>
+              </TableCell>
+              <TableCell className="text-left p-0 ">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold block p-4"
+                >
+                  om salunke
+                </Link>
+              </TableCell>
+              <TableCell className="text-left p-0 ">
+                <Link href={`/invoices/${result.id}`} className="p-4 block">
+                  om salunke
+                </Link>
+              </TableCell>
+              <TableCell className="text-center p-0 ">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold block "
+                >
+                   <Badge className={cn("rounded-full capitalize py-1 px-4",
+                result.status==='open' && "bg-blue-500",
+                result.status==='paid' && "bg-green-600",
+                result.status==='void' && "bg-zinc-700",
+                result.status==='uncollectible' && "bg-red-600"
+                
+                )}>
+                {result.status}
+            </Badge>
+                </Link>
+              </TableCell>
+              <TableCell className="text-right p-0 ">
+                <Link
+                  href={`/invoices/${result.id}`}
+                  className="font-semibold p-4"
+                >
+                  ${(result.value / 100).toFixed(2)}
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </main>

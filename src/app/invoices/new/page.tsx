@@ -1,23 +1,38 @@
-// "use client"
-import React from "react";
+"use client";
+import React, { startTransition, SyntheticEvent, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { sql } from "drizzle-orm";
 import { db } from "@/db";
-const Page = async() => {
-  const result  = await db.execute(sql`SELECT current_database()`);
-  console.log(result)
+import { createAction } from "@/app/actions";
+import SubmitButton from "@/components/SubmitButton";
+const Page = () => {
+  const [state, setState] = useState("ready");
+  const handleOnSubmit = async(event:SyntheticEvent) => {
+    event.preventDefault();
+    if (state === "pending") return;
+    setState("pending");
+    const target = event.target as HTMLFormElement;
+    startTransition(async()=>{
+      const formData = new FormData(target);
+      await createAction(formData);
+    })
+    
+  };
   return (
     <>
       <main className="flex  flex-col justify-center h-full  gap-6 max-w-5xl mx-auto my-12">
         {" "}
-        
         <div className="flex justify-between">
           <h1 className="text-3xl font-semibold">Create Invoices</h1>
         </div>
-        <form className="grid gap-4 max-w-xs">
+        <form 
+          action={createAction}
+          onSubmit={handleOnSubmit}
+          className="grid gap-4 max-w-xs"
+        >
           <div>
             <div>
               <Label htmlFor="name">Billing Name</Label>
@@ -36,7 +51,7 @@ const Page = async() => {
               <Textarea id="description" name="description"></Textarea>
             </div>
             <div className="mt-4">
-              <Button className="w-full font-semibold">Submit</Button>
+              <SubmitButton/>
             </div>
           </div>
         </form>
