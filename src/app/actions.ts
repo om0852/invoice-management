@@ -17,11 +17,10 @@ export async function createAction(formData: FormData) {
       value,
       userId,
       description,
-      status: "open",
+      status:"open"
     })
     .returning({
       id: Invoice.id,
     });
   redirect(`/invoices/${result[0].id}`);
-  // console.log(formData)
 }
