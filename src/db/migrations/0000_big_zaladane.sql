@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS "invoices" (
 	"createTS" timestamp DEFAULT now() NOT NULL,
 	"status" "status" NOT NULL,
 	"value" integer NOT NULL,
-	"description" text NOT NULL
+	"description" text NOT NULL,
+	"userId" text NOT NULL
 );

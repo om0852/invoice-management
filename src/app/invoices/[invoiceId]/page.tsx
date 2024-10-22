@@ -14,7 +14,7 @@ if(isNaN(parsedInvoiceId)){
   const [result] = await db
     .select()
     .from(Invoice)
-    .where(eq(Invoice.id, invoiceId))
+    .where(eq(Invoice.userId, invoiceId))
     .limit(1);
     if(!result) notFound();
   return (

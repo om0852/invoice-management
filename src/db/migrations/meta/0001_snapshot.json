@@ -1,6 +1,6 @@
 {
-  "id": "a716bbce-8544-49c5-9aff-8d91b9e3ec1e",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "c683fd81-6aa2-435e-8006-8df808584dff",
+  "prevId": "a716bbce-8544-49c5-9aff-8d91b9e3ec1e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -20,13 +20,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
-        },
-        "status": {
-          "name": "status",
-          "type": "status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
         },
         "value": {
           "name": "value",

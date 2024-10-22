@@ -13,10 +13,10 @@ export const StatusEnum = pgEnum("status", [
   "uncollectible",
 ]);
 export const Invoice = pgTable("invoices", {
-  id: serial("id").primaryKey().notNull(),
+  id:serial("id").primaryKey().notNull(),
   createTs: timestamp("createTS").notNull().defaultNow(),
-
-  status: StatusEnum("status").notNull(),
+  // status: StatusEnum("status").notNull(),
   value: integer("value").notNull(),
   description: text("description").notNull(),
+  userId: text("userId").notNull(),
 });

@@ -19,6 +19,7 @@ import React from "react";
 
 const Page = async () => {
   const results = await db.select().from(Invoice);
+  if(!results) return null;
   return (
     <main className=" h-full">
       {" "}
