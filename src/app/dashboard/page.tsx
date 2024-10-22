@@ -13,12 +13,16 @@ import {
 import { db } from "@/db";
 import { Invoice } from "@/db/schema";
 import { cn } from "@/lib/utils";
+import { auth } from "@clerk/nextjs/server";
+import { eq } from "drizzle-orm";
 import { BadgePlus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const Page = async () => {
-  const results = await db.select().from(Invoice);
+  const {userId} = auth();
+  if(!userId) return;
+  const results = await db.select().from(Invoice).where(eq(Invoice.userId,userId));
   if(!results) return null;
   return (
     <main className=" h-full">
